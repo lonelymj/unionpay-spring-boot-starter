@@ -2,6 +2,7 @@ package com.lgmn.union.pay.starter.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lgmn.union.pay.starter.domain.UnifiedOrderEntity;
+import com.lgmn.union.pay.starter.utils.DataUtil;
 import com.lgmn.union.pay.starter.utils.SerializableUtil;
 import com.lgmn.union.pay.starter.utils.UnionPayPostUtil;
 
@@ -19,6 +20,10 @@ public class UnionPay_UnifiedOrder_SarterService {
 
     private final static String UNIONPAY_UNIFIEDORDER_URI = "https://qr.chinaums.com/netpay-route-server/api/";
 
+    private final static String UNIONPAY_QUERYPAYSTATUS_URI_TEST = "https://qr-test2.chinaums.com/netpay-route-server/api/";
+
+    private final static String UNIONPAY_QUERYPAYSTATUS_URI = "https://qr.chinaums.com/netpay-route-server/api/";
+
     private String mid;
     private String tid;
     private String instMid;
@@ -26,6 +31,8 @@ public class UnionPay_UnifiedOrder_SarterService {
     private String orderNoPrefix;
     private String msgSrc;
     private String msgType;
+    private String notifyUrl;
+    private String key;
 
     public String getMid() {
         return mid;
@@ -83,7 +90,23 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.msgType = msgType;
     }
 
-    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String msgType) {
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String msgType, String notifyUrl, String key) {
         this.mid = mid;
         this.tid = tid;
         this.instMid = instMid;
@@ -91,6 +114,8 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.orderNoPrefix = orderNoPrefix;
         this.msgSrc = msgSrc;
         this.msgType = msgType;
+        this.notifyUrl = notifyUrl;
+        this.key = key;
     }
 
     /**
@@ -113,9 +138,9 @@ public class UnionPay_UnifiedOrder_SarterService {
         unifiedOrderEntity.setMerOrderId(orderNoPrefix + unifiedOrderEntity.getMerOrderId().substring(4));
         unifiedOrderEntity.setMsgSrc(msgSrc);
         unifiedOrderEntity.setMsgType(msgType);
-        unifiedOrderEntity.setRequestTimestamp(getNowDate());
-        SerializableUtil.getObjectMap(unifiedOrderEntity);
-        Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity);
+        unifiedOrderEntity.setNotifyUrl(notifyUrl);
+        unifiedOrderEntity.setRequestTimestamp(DataUtil.getNowDate());
+        Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity, key);
         return UnionPayPostUtil.getPostAssemble(map, isTest ? UNIONPAY_UNIFIEDORDER_URI_TEST : UNIONPAY_UNIFIEDORDER_URI);
     }
 
@@ -136,10 +161,23 @@ public class UnionPay_UnifiedOrder_SarterService {
 //        System.out.println("\n\n" + jsonObject + "\n\n");
 //    }
 
-    public static String getNowDate() {
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = formatter.format(currentTime);
-        return dateString;
+    /**
+     *
+     * @param unifiedOrderEntity 对象，传个订单号即可
+     * @return
+     * @throws IllegalAccessException
+     * @throws IntrospectionException
+     * @throws InvocationTargetException
+     */
+    public JSONObject postUnionPay_QueryPayStatus (UnifiedOrderEntity unifiedOrderEntity) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
+        unifiedOrderEntity.setMsgType("query");
+        unifiedOrderEntity.setMsgSrc(msgSrc);
+        unifiedOrderEntity.setRequestTimestamp(DataUtil.getNowDate());
+        unifiedOrderEntity.setMid(mid);
+        unifiedOrderEntity.setTid(tid);
+        unifiedOrderEntity.setInstMid(instMid);
+        Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity, key);
+        return UnionPayPostUtil.getPostAssemble(map, isTest ? UNIONPAY_QUERYPAYSTATUS_URI_TEST : UNIONPAY_QUERYPAYSTATUS_URI);
     }
+
 }

@@ -28,6 +28,8 @@ public class UnionPayStarterAutoConfigure {
                                                        unionPaySarterServiceProperties.getIsTest(),
                                                        unionPaySarterServiceProperties.getOrderNoPrefix(),
                                                        unionPaySarterServiceProperties.getMsgSrc(),
-                                                       unionPaySarterServiceProperties.getMsgType());
+                                                       unionPaySarterServiceProperties.getMsgType(),
+                                                       unionPaySarterServiceProperties.getNotifyUrl(),
+                                                       unionPaySarterServiceProperties.getKey());
     }
 }

@@ -10,6 +10,7 @@
     </dependency>
  ## 配置yml/properties
 # yml 配置方式如下（请严格按照此方式配置）
+##### 请注意，请填写真实有效的链接，银联在统一下单的接口收到此字段后，会测试链接是否有效，链接无效的情况会发生不可预估的错误
     unionpay:
       service:
         inst-mid: 机构商户号
@@ -19,6 +20,9 @@
         msg-src: 消息来源
         msg-type: 消息类型
         order-no-prefix: 以银商分配的4位系统编号作为订单号的前4位
+        notify-url: http://shandian.test.ngrok.pyis.top/choiceCar/api/callback
+        key: 秘钥
+            
         
 ## 使用方式
     // 注入 UnionPay_UnifiedOrder_SarterService

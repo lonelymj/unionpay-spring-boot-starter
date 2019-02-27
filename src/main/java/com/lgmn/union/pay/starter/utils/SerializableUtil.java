@@ -15,7 +15,7 @@ import java.util.*;
 
 public class SerializableUtil {
 
-       public static Map<String, String> getObjectMap(UnifiedOrderEntity unifiedOrderEntity) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+       public static Map<String, String> getObjectMap(UnifiedOrderEntity unifiedOrderEntity, String key) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
         Field[] fields = unifiedOrderEntity.getClass().getDeclaredFields();
         Class clazz = unifiedOrderEntity.getClass();
         Map<String, String> map = new LinkedHashMap();
@@ -30,13 +30,13 @@ public class SerializableUtil {
                 multiValueMap.put(fieldName, o.toString());
             }
         }
-        String peramStr = getParamStr(getSortedMap(map))+"fcAmtnx7MwismjWNhNKdHC44mNXtnEQeJkRrhKJwyrW2ysRR";
+        String peramStr = getParamStr(getSortedMap(map))+ key;
         String sign = MD5Util.getMD5Code(peramStr);
         multiValueMap.put("sign", sign);
         return multiValueMap;
     }
 
-    public static void getJsonString(UnifiedOrderEntity unifiedOrderEntity) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+    public static void getJsonString(UnifiedOrderEntity unifiedOrderEntity, String key) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
         Field[] fields = unifiedOrderEntity.getClass().getDeclaredFields();
         Class clazz = unifiedOrderEntity.getClass();
         Map<String, String> map = new LinkedHashMap();
@@ -51,7 +51,7 @@ public class SerializableUtil {
                 multiValueMap.add(fieldName, o.toString());
             }
         }
-        String peramStr = getParamStr(getSortedMap(map))+"fcAmtnx7MwismjWNhNKdHC44mNXtnEQeJkRrhKJwyrW2ysRR";
+        String peramStr = getParamStr(getSortedMap(map))+ key;
         String sign = MD5Util.getMD5Code(peramStr);
         unifiedOrderEntity.setSign(sign);
     }
