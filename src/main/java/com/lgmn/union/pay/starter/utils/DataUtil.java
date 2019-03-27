@@ -10,4 +10,11 @@ public class DataUtil {
         String dateString = formatter.format(currentTime);
         return dateString;
     }
+
+    public static String getNowDate_YYYYMMDDHHMMSS() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
 }

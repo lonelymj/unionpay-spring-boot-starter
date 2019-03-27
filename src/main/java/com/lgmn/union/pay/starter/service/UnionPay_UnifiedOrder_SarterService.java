@@ -1,6 +1,7 @@
 package com.lgmn.union.pay.starter.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.lgmn.union.pay.starter.domain.UnifiedOrderEntity;
 import com.lgmn.union.pay.starter.utils.DataUtil;
 import com.lgmn.union.pay.starter.utils.SerializableUtil;
@@ -8,7 +9,6 @@ import com.lgmn.union.pay.starter.utils.UnionPayPostUtil;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -30,7 +30,6 @@ public class UnionPay_UnifiedOrder_SarterService {
     private Boolean isTest;
     private String orderNoPrefix;
     private String msgSrc;
-    private String msgType;
     private String notifyUrl;
     private String key;
 
@@ -82,13 +81,6 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.msgSrc = msgSrc;
     }
 
-    public String getMsgType() {
-        return msgType;
-    }
-
-    public void setMsgType(String msgType) {
-        this.msgType = msgType;
-    }
 
     public String getNotifyUrl() {
         return notifyUrl;
@@ -106,14 +98,13 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.key = key;
     }
 
-    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String msgType, String notifyUrl, String key) {
+    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String notifyUrl, String key) {
         this.mid = mid;
         this.tid = tid;
         this.instMid = instMid;
         this.isTest = isTest;
         this.orderNoPrefix = orderNoPrefix;
         this.msgSrc = msgSrc;
-        this.msgType = msgType;
         this.notifyUrl = notifyUrl;
         this.key = key;
     }
@@ -137,7 +128,7 @@ public class UnionPay_UnifiedOrder_SarterService {
         unifiedOrderEntity.setInstMid(instMid);
         unifiedOrderEntity.setMerOrderId(orderNoPrefix + unifiedOrderEntity.getMerOrderId().substring(4));
         unifiedOrderEntity.setMsgSrc(msgSrc);
-        unifiedOrderEntity.setMsgType(msgType);
+        unifiedOrderEntity.setMsgType(unifiedOrderEntity.getMsgType());
         unifiedOrderEntity.setNotifyUrl(notifyUrl);
         unifiedOrderEntity.setRequestTimestamp(DataUtil.getNowDate());
         Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity, key);
@@ -151,10 +142,10 @@ public class UnionPay_UnifiedOrder_SarterService {
 //        unifiedOrderEntity.setMid("898310148160568");
 //        unifiedOrderEntity.setMsgSrc("WWW.TEST.COM");
 //        unifiedOrderEntity.setMsgType("uac.appOrder");
-//        unifiedOrderEntity.setRequestTimestamp(getNowDate());
+//        unifiedOrderEntity.setRequestTimestamp(DataUtil.getNowDate());
 //        unifiedOrderEntity.setTid("00000001");
 //        unifiedOrderEntity.setTotalAmount(1);
-//        Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity);
+//        Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity, "12313");
 //
 ////        SerializableUtil.getJsonString(unifiedOrderEntity);
 //        JSONObject jsonObject = UnionPayPostUtil.getPostAssemble(map, UNIONPAY_UNIFIEDORDER_URI_TEST);
@@ -162,7 +153,7 @@ public class UnionPay_UnifiedOrder_SarterService {
 //    }
 
     /**
-     *
+     *  查询订单支付状态
      * @param unifiedOrderEntity 对象，传个订单号即可
      * @return
      * @throws IllegalAccessException

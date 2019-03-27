@@ -29,15 +29,11 @@ public class UnionPaySarterServiceProperties {
      * 订单号前缀，需要银行分配的前4位
      */
     private String orderNoPrefix;
+
     /**
      * 消息来源
      */
     private String msgSrc;
-
-    /**
-     * 消息类型
-     */
-    private String msgType;
 
     /**
      * 秘钥
@@ -96,14 +92,6 @@ public class UnionPaySarterServiceProperties {
 
     public void setMsgSrc(String msgSrc) {
         this.msgSrc = msgSrc;
-    }
-
-    public String getMsgType() {
-        return msgType;
-    }
-
-    public void setMsgType(String msgType) {
-        this.msgType = msgType;
     }
 
     public String getNotifyUrl() {
