@@ -40,11 +40,11 @@ public class UnionPaySarterServiceProperties {
      */
     private String key;
 
-    /**
-     * 支付成功通知地址（callBack Url）
-     * 请注意，请填写真实有效的链接，银联在统一下单的接口收到此字段后，会测试链接是否有效，链接无效的情况会发生不可预估的错误
-     */
-    private String notifyUrl;
+//    /**
+//     * 支付成功通知地址（callBack Url）
+//     * 请注意，请填写真实有效的链接，银联在统一下单的接口收到此字段后，会测试链接是否有效，链接无效的情况会发生不可预估的错误
+//     */
+//    private String notifyUrl;
 
     public String getMid() {
         return mid;
@@ -94,13 +94,13 @@ public class UnionPaySarterServiceProperties {
         this.msgSrc = msgSrc;
     }
 
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
+//    public String getNotifyUrl() {
+//        return notifyUrl;
+//    }
+//
+//    public void setNotifyUrl(String notifyUrl) {
+//        this.notifyUrl = notifyUrl;
+//    }
 
     public String getKey() {
         return key;

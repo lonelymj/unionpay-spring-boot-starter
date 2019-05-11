@@ -30,7 +30,6 @@ public class UnionPay_UnifiedOrder_SarterService {
     private Boolean isTest;
     private String orderNoPrefix;
     private String msgSrc;
-    private String notifyUrl;
     private String key;
 
     public String getMid() {
@@ -81,15 +80,6 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.msgSrc = msgSrc;
     }
 
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
-
     public String getKey() {
         return key;
     }
@@ -98,14 +88,13 @@ public class UnionPay_UnifiedOrder_SarterService {
         this.key = key;
     }
 
-    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String notifyUrl, String key) {
+    public UnionPay_UnifiedOrder_SarterService(String mid, String tid, String instMid, Boolean isTest, String orderNoPrefix, String msgSrc, String key) {
         this.mid = mid;
         this.tid = tid;
         this.instMid = instMid;
         this.isTest = isTest;
         this.orderNoPrefix = orderNoPrefix;
         this.msgSrc = msgSrc;
-        this.notifyUrl = notifyUrl;
         this.key = key;
     }
 
@@ -129,7 +118,6 @@ public class UnionPay_UnifiedOrder_SarterService {
         unifiedOrderEntity.setMerOrderId(orderNoPrefix + unifiedOrderEntity.getMerOrderId().substring(4));
         unifiedOrderEntity.setMsgSrc(msgSrc);
         unifiedOrderEntity.setMsgType(unifiedOrderEntity.getMsgType());
-        unifiedOrderEntity.setNotifyUrl(notifyUrl);
         unifiedOrderEntity.setRequestTimestamp(DataUtil.getNowDate());
         Map<String, String> map = SerializableUtil.getObjectMap(unifiedOrderEntity, key);
         return UnionPayPostUtil.getPostAssemble(map, isTest ? UNIONPAY_UNIFIEDORDER_URI_TEST : UNIONPAY_UNIFIEDORDER_URI);

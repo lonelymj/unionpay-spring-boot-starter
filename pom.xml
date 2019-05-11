@@ -6,7 +6,7 @@
 
     <groupId>com.lgmn.starter</groupId>
     <artifactId>unionpay-spring-boot-starter</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
 
     <parent>
